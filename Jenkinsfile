@@ -10,7 +10,7 @@ pipeline{
     stages{
         stage('Pull code from SCM'){
             steps{
-                git 'https://github.com/MithunTechnologiesDevOps/maven-web-application.git'
+                git 'https://github.com/one-devops-projects/java-web-app.git'
             }
         }
         stage('Build Code'){
