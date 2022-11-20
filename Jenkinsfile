@@ -36,6 +36,7 @@ pipeline{
                 // some block
                     sh "ssh -o StrictHostKeyChecking=no ec2-user@172.31.86.179 aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 537960581474.dkr.ecr.us-east-1.amazonaws.com"
                     //sh "docker pull 537960581474.dkr.ecr.us-east-1.amazonaws.com/java-web-app:${BUILD_NUMBER}"
+		    sh "docker rm -f maven-web-app || true"
                     sh "docker run -d --name maven-web-app -p 8080:8080 537960581474.dkr.ecr.us-east-1.amazonaws.com/java-web-app:${BUILD_NUMBER}"
                 }
             }
