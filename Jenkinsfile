@@ -30,7 +30,7 @@ pipeline{
                 sh "docker push 537960581474.dkr.ecr.us-east-1.amazonaws.com/java-web-app:${BUILD_NUMBER}"
             }
         }
-	stage('Copy deployment script to Remote Host"){
+	stage('Copy deployment script to Remote Host'){
 	    steps{
 		sshagent(['ea8709c0-f221-4d17-892f-a70989dd7e0b']) {
                 
