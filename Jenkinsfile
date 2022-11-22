@@ -34,7 +34,7 @@ pipeline{
 	    steps{
 		sshagent(['ea8709c0-f221-4d17-892f-a70989dd7e0b']) {
                 
-                    sh "scp -o StrictHostKeyChecking=no deployment-script.sh ec2-user@172.31.86.179:/home/ec2-user/
+                    sh "scp -o StrictHostKeyChecking=no deployment-script.sh ec2-user@172.31.86.179:/home/ec2-user/"
                 }
             }	
 	}
