@@ -30,24 +30,19 @@ pipeline{
                 sh "docker push 537960581474.dkr.ecr.us-east-1.amazonaws.com/java-web-app:${BUILD_NUMBER}"
             }
         }
-	
+	stage('Copy deployment script to Remote Host'){
+	    steps{
+		sshagent(['ea8709c0-f221-4d17-892f-a70989dd7e0b']) {
+                
+                    sh "scp -o StrictHostKeyChecking=no deployment-script.sh ec2-user@172.31.86.179:/home/ec2-user/"
+                }
+            }	
+	}
         stage('Pull and run image from AWS ECR'){
             steps{
                 sshagent(['ea8709c0-f221-4d17-892f-a70989dd7e0b']) {
-                    script{
-                        sh """
-                            #!/bin/bash
-                            ssh -o StrictHostKeyChecking=no ec2-user@172.31.86.179 aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 537960581474.dkr.ecr.us-east-1.amazonaws.com
-
-                            docker pull 537960581474.dkr.ecr.us-east-1.amazonaws.com/java-web-app:${BUILD_NUMBER}
-
-                            docker rm -f maven-web-app || true
-
-                            docker run -d --name maven-web-app -p 8080:8080 537960581474.dkr.ecr.us-east-1.amazonaws.com/java-web-app:${BUILD_NUMBER}
-                        exit 0
-                        <<< EOF
-                        """
-                    }
+                
+                    sh "ssh -o StrictHostKeyChecking=no ec2-user@172.31.86.179 ./deployment-script.sh"
                 }
             }
         }
