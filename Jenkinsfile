@@ -34,7 +34,7 @@ pipeline{
             steps{
                 sshagent(['ea8709c0-f221-4d17-892f-a70989dd7e0b']) {
                 // some block
-                    sh "ssh -o StrictHostKeyChecking=no ec2-user@172.31.86.179 /bin/bash deployment-script.sh"
+                    sh "ssh -o StrictHostKeyChecking=no ec2-user@172.31.86.179 ./deployment-script.sh"
                 }
             }
         }
