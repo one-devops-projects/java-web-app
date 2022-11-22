@@ -34,10 +34,7 @@ pipeline{
             steps{
                 sshagent(['ea8709c0-f221-4d17-892f-a70989dd7e0b']) {
                 // some block
-                    sh "ssh -o StrictHostKeyChecking=no ec2-user@172.31.86.179 aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 537960581474.dkr.ecr.us-east-1.amazonaws.com"
-                    sh "ssh -o StrictHostKeyChecking=no ec2-user@172.31.86.179 docker pull 537960581474.dkr.ecr.us-east-1.amazonaws.com/java-web-app:${BUILD_NUMBER}"
-		    sh "ssh -o StrictHostKeyChecking=no ec2-user@172.31.86.179 docker rm -f maven-web-app || true"
-                    sh "ssh -o StrictHostKeyChecking=no ec2-user@172.31.86.179 docker run -d --name maven-web-app -p 8080:8080 537960581474.dkr.ecr.us-east-1.amazonaws.com/java-web-app:${BUILD_NUMBER}"
+                    sh "ssh -o StrictHostKeyChecking=no ec2-user@172.31.86.179 deployment-script.sh"
                 }
             }
         }
