@@ -30,10 +30,18 @@ pipeline{
                 sh "docker push 537960581474.dkr.ecr.us-east-1.amazonaws.com/java-web-app:${BUILD_NUMBER}"
             }
         }
+	stage('Copy deployment script to Remote Host"){
+	    steps{
+		sshagent(['ea8709c0-f221-4d17-892f-a70989dd7e0b']) {
+                
+                    sh "scp -o StrictHostKeyChecking=no deployment-script.sh ec2-user@172.31.86.179:/home/ec2-user/
+                }
+            }	
+	}
         stage('Pull and run image from AWS ECR'){
             steps{
                 sshagent(['ea8709c0-f221-4d17-892f-a70989dd7e0b']) {
-                // some block
+                
                     sh "ssh -o StrictHostKeyChecking=no ec2-user@172.31.86.179 ./deployment-script.sh"
                 }
             }
